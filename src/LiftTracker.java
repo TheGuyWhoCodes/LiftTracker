@@ -28,7 +28,7 @@ public class LiftTracker {
 	private Mat hsvThresholdOutput = new Mat();
 	private Mat cvErodeOutput = new Mat();
 	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
-	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
+	ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 	double[] centerX;
 	Mat blurInput;
 	static {
@@ -297,17 +297,7 @@ public class LiftTracker {
 			final double ratio = bb.width / (double)bb.height;
 			if (ratio < minRatio || ratio > maxRatio) continue;
 			output.add(contour);
-			
-			
-			
-			//////////////////////////////////////
-			//////////////////////////////////////
-			//////////////////////////////////////
-			// -------------- MAKE SURE YOU SAVE THIS CODE WHEN REPLACING PLEASE DEAR GOD SAVE THIS PLEASE PLEASE PLEASE PLEASE PLEASE PLEASE ----------
-			Rect r = Imgproc.boundingRect(inputContours.get(1));
-			Rect r1 = Imgproc.boundingRect(inputContours.get(0)); 
-			centerX = new double[]{r1.x + (r1.width / 2), r.x + (r.width / 2)};
-			Imgcodecs.imwrite("output.png", blurInput);
+
 		}
 	}
 }
