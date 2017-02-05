@@ -1,4 +1,3 @@
-
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -37,13 +36,8 @@ import org.opencv.videoio.VideoCapture;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 
-/**
- * 
- * @author Elijah Kaufman
- * @version 1.0
- * @description Uses opencv and network table 3.0 to detect the vision targets
- *
- */
+
+ 
 public class Processing {
 
 	/**
@@ -69,11 +63,8 @@ public class Processing {
 	static double distanceFromTarget;
 	static double lengthError;
 	static double[] centerX;
-	/**
-	 * 
-	 * @param args command line arguments0
-	 * just the main loop for the program and the entry points
-	 */
+
+	
 	public static void main(String[] args) {
 		NetworkTable.setClientMode();
 		NetworkTable.setTeam(1806);
@@ -84,9 +75,9 @@ public class Processing {
 		while(shouldRun){
 			try {
 //				opens up the camera stream and tries to load it
-				videoCapture = new VideoCapture();
+				videoCapture = new VideoCapture(0);
 				tracker = new LiftTracker();
-				videoCapture.open("http://roborio-1806-frc.local:1181/?action=stream");
+				//videoCapture.open("http://roborio-1806-frc.local:1181/?action=stream");
 				// change that to your team number boi("http://roborio-XXXX-frc.local:1181/?action=stream");
 				while(!videoCapture.isOpened()){
 					System.out.println("Didn't open Camera, restart jar");
