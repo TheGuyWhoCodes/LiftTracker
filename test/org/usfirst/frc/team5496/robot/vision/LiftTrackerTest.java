@@ -8,7 +8,8 @@ public class LiftTrackerTest {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		Processing processing = new Processing();
+		assertTrue(false);
 	}
 
 }
