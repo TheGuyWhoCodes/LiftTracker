@@ -1,3 +1,4 @@
+package org.usfirst.frc.team5496.robot.vision;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

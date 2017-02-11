@@ -1,4 +1,6 @@
+package org.usfirst.frc.team5496.robot.vision;
 import java.awt.Canvas;
+
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
