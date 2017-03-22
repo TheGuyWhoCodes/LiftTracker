@@ -26,11 +26,9 @@ public class LiftTracker {
 	//Outputs
 	private Mat blurOutput = new Mat();
 	private Mat hsvThresholdOutput = new Mat();
-	private Mat cvErodeOutput = new Mat();
 	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
-	ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
-	double[] centerX;
-	Mat blurInput;
+	public ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
+
 	static {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	}
@@ -40,29 +38,20 @@ public class LiftTracker {
 	 */
 	public void process(Mat source0) {
 		// Step Blur0:
-		blurInput = source0;
+		Mat blurInput = source0;
 		BlurType blurType = BlurType.get("Box Blur");
 		double blurRadius = 5.538085255066387;
 		blur(blurInput, blurType, blurRadius, blurOutput);
 
 		// Step HSV_Threshold0:
 		Mat hsvThresholdInput = blurOutput;
-		double[] hsvThresholdHue = {0.0, 111.0323574730354};
-		double[] hsvThresholdSaturation = {0.0, 118.63636363636364};
-		double[] hsvThresholdValue = {245.3954802259887, 255.0};
+		double[] hsvThresholdHue = {0.0, 97.00810208012554};
+		double[] hsvThresholdSaturation = {199.50539568345323, 255.0};
+		double[] hsvThresholdValue = {99.72648861705774, 255.0};
 		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
-		// Step CV_erode0:
-		Mat cvErodeSrc = hsvThresholdOutput;
-		Mat cvErodeKernel = new Mat();
-		Point cvErodeAnchor = new Point(-1, -1);
-		double cvErodeIterations = 1.0;
-		int cvErodeBordertype = Core.BORDER_CONSTANT;
-		Scalar cvErodeBordervalue = new Scalar(-1);
-		cvErode(cvErodeSrc, cvErodeKernel, cvErodeAnchor, cvErodeIterations, cvErodeBordertype, cvErodeBordervalue, cvErodeOutput);
-
 		// Step Find_Contours0:
-		Mat findContoursInput = cvErodeOutput;
+		Mat findContoursInput = hsvThresholdOutput;
 		boolean findContoursExternalOnly = false;
 		findContours(findContoursInput, findContoursExternalOnly, findContoursOutput);
 
@@ -74,11 +63,11 @@ public class LiftTracker {
 		double filterContoursMaxWidth = 10000.0;
 		double filterContoursMinHeight = 0.0;
 		double filterContoursMaxHeight = 600.0;
-		double[] filterContoursSolidity = {0.0, 100.0};
+		double[] filterContoursSolidity = {45.78754578754578, 100.0};
 		double filterContoursMaxVertices = 1000000.0;
 		double filterContoursMinVertices = 0.0;
 		double filterContoursMinRatio = 0.0;
-		double filterContoursMaxRatio = 1000.0;
+		double filterContoursMaxRatio = 1.0;
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
 
 	}
@@ -97,14 +86,6 @@ public class LiftTracker {
 	 */
 	public Mat hsvThresholdOutput() {
 		return hsvThresholdOutput;
-	}
-
-	/**
-	 * This method is a generated getter for the output of a CV_erode.
-	 * @return Mat output from CV_erode.
-	 */
-	public Mat cvErodeOutput() {
-		return cvErodeOutput;
 	}
 
 	/**
@@ -206,30 +187,6 @@ public class LiftTracker {
 	}
 
 	/**
-	 * Expands area of lower value in an image.
-	 * @param src the Image to erode.
-	 * @param kernel the kernel for erosion.
-	 * @param anchor the center of the kernel.
-	 * @param iterations the number of times to perform the erosion.
-	 * @param borderType pixel extrapolation method.
-	 * @param borderValue value to be used for a constant border.
-	 * @param dst Output Image.
-	 */
-	private void cvErode(Mat src, Mat kernel, Point anchor, double iterations,
-		int borderType, Scalar borderValue, Mat dst) {
-		if (kernel == null) {
-			kernel = new Mat();
-		}
-		if (anchor == null) {
-			anchor = new Point(-1,-1);
-		}
-		if (borderValue == null) {
-			borderValue = new Scalar(-1);
-		}
-		Imgproc.erode(src, dst, kernel, anchor, (int)iterations, borderType, borderValue);
-	}
-
-	/**
 	 * Sets the values of pixels in a binary image to their distance to the nearest black pixel.
 	 * @param input The image on which to perform the Distance Transform.
 	 * @param type The Transform.
@@ -297,8 +254,11 @@ public class LiftTracker {
 			final double ratio = bb.width / (double)bb.height;
 			if (ratio < minRatio || ratio > maxRatio) continue;
 			output.add(contour);
-
 		}
 	}
+
+
+
+
 }
 
