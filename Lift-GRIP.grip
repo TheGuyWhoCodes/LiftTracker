@@ -1,7 +1,7 @@
 <grip:Pipeline>
   <sources>
     <grip:Camera>
-      <property name="address" value="http://roborio-1806-frc.local:1181/?action=stream"/>
+      <property name="address" value="http://roborio-1806-frc.local:1181/stream.mjpg"/>
     </grip:Camera>
   </sources>
   <steps>
@@ -31,7 +31,7 @@
       </grip:Input>
       <grip:Input step="1" socket="3">
         <value>
-          <double>30.93152458828077</double>
+          <double>141.00346703432393</double>
           <double>255.0</double>
         </value>
       </grip:Input>
@@ -115,12 +115,16 @@
       <grip:Input step="0" socket="0"/>
     </grip:Connection>
     <grip:Connection>
+      <grip:Output step="3" socket="0" previewed="true"/>
+      <grip:Input step="4" socket="0"/>
+    </grip:Connection>
+    <grip:Connection>
       <grip:Output step="0" socket="0" previewed="false"/>
       <grip:Input step="1" socket="0"/>
     </grip:Connection>
     <grip:Connection>
-      <grip:Output step="3" socket="0" previewed="true"/>
-      <grip:Input step="4" socket="0"/>
+      <grip:Output step="1" socket="0" previewed="true"/>
+      <grip:Input step="2" socket="0"/>
     </grip:Connection>
     <grip:Connection>
       <grip:Output step="2" socket="0" previewed="false"/>

@@ -60,12 +60,12 @@ public class Processing {
 	static double distanceFromTarget;
 	static double lengthError;
 	static double[] centerX;
-	static double HEIGHT_CLOSENESS = .2;
+	static double HEIGHT_CLOSENESS = .15;
 	
 	public static void main(String[] args) {
 		NetworkTable.setClientMode();
 		NetworkTable.setTeam(1806);
-		NetworkTable.setIPAddress("roborio-1806-frc.local"); //TODO FIX THIS LINK AT COMP
+		NetworkTable.setIPAddress("10.18.06.2"); //TODO FIX THIS LINK AT COMP
 		NetworkTable.initialize();
 		table = NetworkTable.getTable("LiftTracker");
 		
@@ -74,7 +74,7 @@ public class Processing {
 //				opens up the camera stream and tries to load it
 				videoCapture = new VideoCapture();
 				tracker = new LiftTracker();
-				videoCapture.open("http://roborio-XXXX-frc.local:1181/?action=stream");  //TODO FIX THIS LINK AT COMP
+				videoCapture.open("http://roborio-1806-frc.local:1181/?action=stream");  //TODO FIX THIS LINK AT COMP
 				// change that to your team number boi("http://roborio-XXXX-frc.local:1181/?action=stream");
 				while(!videoCapture.isOpened()){
 					System.out.println("Didn't open Camera, restart jar");
@@ -108,6 +108,7 @@ public class Processing {
 			System.out.println(getAngle());
 			table.putDouble("distanceFromTarget", distanceFromTarget());
 			table.putDouble("angleFromGoal", getAngle());
+			table.putNumber("numberOfContours", tracker.filterContoursOutput().size());
 			//table.putNumberArray("centerX", centerX);
 			videoCapture.read(matOriginal);
 		}
