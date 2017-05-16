@@ -17,3 +17,5 @@ Here are the steps to get this working:
  - Vision Track!
 
 If you have any issues, open up an issue and I'll be happy to look at it.
+
+Whitepaper posted here: https://medium.com/@christopherariagno/vision-tracking-in-frc-what-ive-learned-this-year-2bbb2e713794
