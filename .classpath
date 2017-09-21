@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="var" path="opencv" sourcepath="opencv.sources"/>
-	<classpathentry kind="lib" path="C:/Users/SWAT/Desktop/LiftTracker-master/NetworkTables-3.0.0-20151123.234551-18-desktop-development.jar"/>
+	<classpathentry kind="lib" path="C:/Users/chris/Desktop/lifttracker/jar/NetworkTables-3.1.7-armhf.jar"/>
+	<classpathentry kind="lib" path="C:/Users/chris/Desktop/lifttracker/jar/opencv-330.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

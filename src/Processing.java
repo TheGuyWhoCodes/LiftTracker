@@ -38,7 +38,9 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 public class Processing {
 
 	static{ 
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+//		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		System.load("/home/ubuntu/Desktop/lib/libntcore.so");
+		System.load("/home/ubuntu/Desktop/lib/libopencv_java330.so");
 
 	}
 //	Process for GRIP	
@@ -65,7 +67,7 @@ public class Processing {
 	public static void main(String[] args) {
 		NetworkTable.setClientMode();
 		NetworkTable.setTeam(1806);
-		NetworkTable.setIPAddress("10.18.06.2"); //TODO FIX THIS LINK AT COMP
+		NetworkTable.setIPAddress("192.168.1.68"); //TODO FIX THIS LINK AT COMP
 		NetworkTable.initialize();
 		table = NetworkTable.getTable("LiftTracker");
 		
@@ -74,7 +76,7 @@ public class Processing {
 //				opens up the camera stream and tries to load it
 				videoCapture = new VideoCapture();
 				tracker = new LiftTracker();
-				videoCapture.open("http://roborio-1806-frc.local:1181/?action=stream");  //TODO FIX THIS LINK AT COMP
+				videoCapture.open(0);  //TODO FIX THIS LINK AT COMP
 				// change that to your team number boi("http://roborio-XXXX-frc.local:1181/?action=stream");
 				while(!videoCapture.isOpened()){
 					System.out.println("Didn't open Camera, restart jar");
@@ -121,7 +123,7 @@ public class Processing {
 				Rect r = Imgproc.boundingRect(tracker.filterContoursOutput.get(1));
 				Rect r1 = Imgproc.boundingRect(tracker.filterContoursOutput.get(0)); 
 				centerX = new double[]{r1.x + (r1.width / 2), r.x + (r.width / 2)};
-				Imgcodecs.imwrite("output.png", matFlipper);
+				Imgcodecs.imwrite("output.png", matOriginal);
 				//System.out.println(centerX.length); //testing
 				// this again checks for the 2 shapes on the target
 				if(tracker.filterContoursOutput.size() == 2){

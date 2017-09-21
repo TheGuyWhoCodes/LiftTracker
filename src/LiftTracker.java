@@ -30,7 +30,8 @@ public class LiftTracker {
 	public ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 
 	static {
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+//		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		System.load("/home/ubuntu/Desktop/lib/libopencv_java330.so");
 	}
 
 	/**
