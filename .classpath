@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="C:/Users/chris/Desktop/lifttracker/jar/NetworkTables-3.1.7-armhf.jar"/>
-	<classpathentry kind="lib" path="C:/Users/chris/Desktop/lifttracker/jar/opencv-330.jar"/>
+	<classpathentry kind="var" path="opencv_armhf"/>
+	<classpathentry kind="var" path="networktable-armhf"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

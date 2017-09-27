@@ -26,11 +26,10 @@ public class LiftTracker {
 	//Outputs
 	private Mat blurOutput = new Mat();
 	private Mat hsvThresholdOutput = new Mat();
-	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
+	public ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
 	public ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 
 	static {
-//		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		System.load("/home/ubuntu/Desktop/lib/libopencv_java330.so");
 	}
 
@@ -46,9 +45,9 @@ public class LiftTracker {
 
 		// Step HSV_Threshold0:
 		Mat hsvThresholdInput = blurOutput;
-		double[] hsvThresholdHue = {0.0, 103.15144679002314};
-		double[] hsvThresholdSaturation = {0.0, 255.0};
-		double[] hsvThresholdValue = {141.00346703432393, 255.0};
+		double[] hsvThresholdHue = {0.0, 180.0};
+		double[] hsvThresholdSaturation = {155.9352517985612, 255.0};
+		double[] hsvThresholdValue = {108.35932810817671, 255.0};
 		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
 		// Step Find_Contours0:
@@ -60,15 +59,15 @@ public class LiftTracker {
 		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
 		double filterContoursMinArea = 0.0;
 		double filterContoursMinPerimeter = 0.0;
-		double filterContoursMinWidth = 0.0;
+		double filterContoursMinWidth = 3.0;
 		double filterContoursMaxWidth = 10000.0;
 		double filterContoursMinHeight = 0.0;
 		double filterContoursMaxHeight = 600.0;
-		double[] filterContoursSolidity = {45.78754578754578, 100.0};
+		double[] filterContoursSolidity = {71.86668247819325, 100.0};
 		double filterContoursMaxVertices = 1000000.0;
 		double filterContoursMinVertices = 0.0;
 		double filterContoursMinRatio = 0.0;
-		double filterContoursMaxRatio = 1.0;
+		double filterContoursMaxRatio = 7.0;
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
 
 	}
