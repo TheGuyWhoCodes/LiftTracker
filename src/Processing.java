@@ -33,6 +33,7 @@ import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.videoio.VideoCapture;
+import org.opencv.videoio.Videoio;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 public class Processing {
@@ -50,10 +51,10 @@ public class Processing {
 	static Mat matOriginal;
 	static Mat matFlipper;
 	public static final double OFFSET_TO_FRONT = 0;
-	public static final double CAMERA_WIDTH = 640;
+	public static final double CAMERA_WIDTH = 320;
 	public static final double DISTANCE_CONSTANT= 5738;
 	public static final double WIDTH_BETWEEN_TARGET = 8.5;
-	public static final double ANGLE_OFFSET =  4.9107;
+	public static final double ANGLE_OFFSET =  0;
 	public static boolean shouldRun = true;
 	static NetworkTable table;
 	
@@ -67,7 +68,7 @@ public class Processing {
 	public static void main(String[] args) {
 		NetworkTable.setClientMode();
 		NetworkTable.setTeam(1806);
-		NetworkTable.setIPAddress("192.168.1.68"); //TODO FIX THIS LINK AT COMP
+		NetworkTable.setIPAddress("10.18.6.2"); //TODO FIX THIS LINK AT COMP
 		NetworkTable.initialize();
 		table = NetworkTable.getTable("LiftTracker");
 		
@@ -77,6 +78,8 @@ public class Processing {
 				videoCapture = new VideoCapture();
 				tracker = new LiftTracker();
 				videoCapture.open(0);  //TODO FIX THIS LINK AT COMP
+				videoCapture.set(Videoio.CV_CAP_PROP_FRAME_WIDTH, 320);
+				videoCapture.set(Videoio.CV_CAP_PROP_FRAME_HEIGHT, 240);
 				// change that to your team number boi("http://roborio-XXXX-frc.local:1181/?action=stream");
 				while(!videoCapture.isOpened()){
 					System.out.println("Didn't open Camera, restart jar");
@@ -103,7 +106,6 @@ public class Processing {
 		while(true){
 			matFlipper = new Mat();
 			//System.out.println("Hey I'm Processing Something!");
-			Core.flip(matOriginal, matFlipper , 0);
 			videoCapture.read(matOriginal);
 			tracker.process(matOriginal);
 			returnCenterX();
@@ -112,18 +114,16 @@ public class Processing {
 			table.putDouble("angleFromGoal", getAngle());
 			table.putNumber("numberOfContours", tracker.filterContoursOutput().size());
 			//table.putNumberArray("centerX", centerX);
-			videoCapture.read(matOriginal);
 		}
 		
 	}
 	public static double returnCenterX(){
 		double[] defaultValue = new double[0];
 			// This is the center value returned by GRIP thank WPI
-			if(!tracker.filterContoursOutput.isEmpty() && tracker.filterContoursOutput.size() >= 2){
+			if(!tracker.filterContoursOutput.isEmpty() && tracker.filterContoursOutput.size() >= 2 && tracker.filterContoursOutput().size() <=8){
 				Rect r = Imgproc.boundingRect(tracker.filterContoursOutput.get(1));
 				Rect r1 = Imgproc.boundingRect(tracker.filterContoursOutput.get(0)); 
 				centerX = new double[]{r1.x + (r1.width / 2), r.x + (r.width / 2)};
-				Imgcodecs.imwrite("output.png", matOriginal);
 				//System.out.println(centerX.length); //testing
 				// this again checks for the 2 shapes on the target
 				if(tracker.filterContoursOutput.size() == 2){
@@ -205,6 +205,7 @@ public class Processing {
 					angleToGoal = Math.atan(distanceFromCenterInch / distanceFromTarget());
 					angleToGoal = Math.toDegrees(angleToGoal);
 					angleToGoal = -angleToGoal - ANGLE_OFFSET;
+					Imgcodecs.imwrite("output.png", matOriginal);
 					
 					}
 			}
