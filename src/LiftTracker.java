@@ -40,14 +40,14 @@ public class LiftTracker {
 		// Step Blur0:
 		Mat blurInput = source0;
 		BlurType blurType = BlurType.get("Box Blur");
-		double blurRadius = 5.538085255066387;
+		double blurRadius = 0.0;
 		blur(blurInput, blurType, blurRadius, blurOutput);
 
 		// Step HSV_Threshold0:
 		Mat hsvThresholdInput = blurOutput;
 		double[] hsvThresholdHue = {0.0, 180.0};
-		double[] hsvThresholdSaturation = {155.9352517985612, 255.0};
-		double[] hsvThresholdValue = {108.35932810817671, 255.0};
+		double[] hsvThresholdSaturation = {0.0, 255.0};
+		double[] hsvThresholdValue = {32.68486767652204, 255.0};
 		hsvThreshold(hsvThresholdInput, hsvThresholdHue, hsvThresholdSaturation, hsvThresholdValue, hsvThresholdOutput);
 
 		// Step Find_Contours0:
@@ -59,15 +59,15 @@ public class LiftTracker {
 		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
 		double filterContoursMinArea = 0.0;
 		double filterContoursMinPerimeter = 0.0;
-		double filterContoursMinWidth = 3.0;
+		double filterContoursMinWidth = 13.0;
 		double filterContoursMaxWidth = 10000.0;
 		double filterContoursMinHeight = 0.0;
 		double filterContoursMaxHeight = 600.0;
-		double[] filterContoursSolidity = {71.86668247819325, 100.0};
+		double[] filterContoursSolidity = {0.0, 100.0};
 		double filterContoursMaxVertices = 1000000.0;
 		double filterContoursMinVertices = 0.0;
 		double filterContoursMinRatio = 0.0;
-		double filterContoursMaxRatio = 7.0;
+		double filterContoursMaxRatio = 19999.0;
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
 
 	}

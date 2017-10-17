@@ -64,10 +64,13 @@ public class Processing {
 	static double lengthError;
 	static double[] centerX;
 	static double HEIGHT_CLOSENESS = .15;
-	
+	static double lastfps= 0;
+	static double fps = 0;
+	static double lastTime = 0;
 	public static void main(String[] args) {
 		NetworkTable.setClientMode();
 		NetworkTable.setTeam(1806);
+		// MY IP IS 10.18.6.8
 		NetworkTable.setIPAddress("10.18.6.2"); //TODO FIX THIS LINK AT COMP
 		NetworkTable.initialize();
 		table = NetworkTable.getTable("LiftTracker");
@@ -77,7 +80,7 @@ public class Processing {
 //				opens up the camera stream and tries to load it
 				videoCapture = new VideoCapture();
 				tracker = new LiftTracker();
-				videoCapture.open(0);  //TODO FIX THIS LINK AT COMP
+				videoCapture.open(0); 
 				videoCapture.set(Videoio.CV_CAP_PROP_FRAME_WIDTH, 320);
 				videoCapture.set(Videoio.CV_CAP_PROP_FRAME_HEIGHT, 240);
 				// change that to your team number boi("http://roborio-XXXX-frc.local:1181/?action=stream");
@@ -108,12 +111,19 @@ public class Processing {
 			//System.out.println("Hey I'm Processing Something!");
 			videoCapture.read(matOriginal);
 			tracker.process(matOriginal);
+			Imgcodecs.imwrite("output.png", matOriginal);
 			returnCenterX();
-			System.out.println(getAngle());
 			table.putDouble("distanceFromTarget", distanceFromTarget());
 			table.putDouble("angleFromGoal", getAngle());
 			table.putNumber("numberOfContours", tracker.filterContoursOutput().size());
 			//table.putNumberArray("centerX", centerX);
+			
+			fps = (1000 / (System.currentTimeMillis() + 1 - lastTime));			
+			System.out.println("Processing FPS: " + (fps + lastfps) / 2);
+			//System.out.println(azimuth);
+			lastTime = System.currentTimeMillis();
+			lastfps = fps;
+			table.putNumber("FPS", fps);
 		}
 		
 	}
@@ -129,13 +139,13 @@ public class Processing {
 				if(tracker.filterContoursOutput.size() == 2){
 					// subtracts one another to get length in pixels
 					lengthBetweenContours = Math.abs(centerX[0] - centerX[1]);
-					System.out.println("I see: " + centerX.length);
+					//System.out.println("I see: " + centerX.length);
 				} else {
 					Rect[] rectangleArray = new Rect[tracker.filterContoursOutput.size()];
-					System.out.println("I see: " + rectangleArray.length);
+					//System.out.println("I see: " + rectangleArray.length);
 					for(int i = 0 ; i < tracker.filterContoursOutput.size(); i++){
 						rectangleArray[i] = Imgproc.boundingRect(tracker.filterContoursOutput().get(i)); 
-						System.out.println("Object" + i + " X " + rectangleArray[i].x + " Y "+rectangleArray[i].y + "Width = " + rectangleArray[i].width);
+//						System.out.println("Object" + i + " X " + rectangleArray[i].x + " Y "+rectangleArray[i].y + "Width = " + rectangleArray[i].width);
 					}
 					ArrayList<ArrayList<Integer>> Pairs = new ArrayList<ArrayList<Integer>>();
 					for(int i = 0; i < rectangleArray.length; i++){
@@ -146,7 +156,7 @@ public class Processing {
 									tempPairs.add(i);
 									tempPairs.add(j);
 									Pairs.add(tempPairs);
-									System.out.println("\t Found Pair" + i + "and " + j);
+//									System.out.println("\t Found Pair" + i + "and " + j);
 							}
 							
 						}
@@ -161,8 +171,8 @@ public class Processing {
 							double[] r1Points = {r.x + (r.width /2) , r.y + (r.height / 2)};
 							double[] r2Points = {r1.x + (r1.width /2) , r1.y + (r1.height / 2)};
 							double distanceBetweenPoints = Math.sqrt(Math.pow((r2Points[0] - r1Points[0]), 2) + (Math.pow((r2Points[1] - r1Points[1]), 2)));
-							System.out.println("\t r1 X : " + r.x);
-							System.out.println("\t r2 X : " + r1.x);
+//							System.out.println("\t r1 X : " + r.x);
+//							System.out.println("\t r2 X : " + r1.x);
 
 							if(distanceBetweenPoints < bestDistance){
 								//System.out.println("\t Best Distance = " + distanceBetweenPoints );
@@ -205,7 +215,6 @@ public class Processing {
 					angleToGoal = Math.atan(distanceFromCenterInch / distanceFromTarget());
 					angleToGoal = Math.toDegrees(angleToGoal);
 					angleToGoal = -angleToGoal - ANGLE_OFFSET;
-					Imgcodecs.imwrite("output.png", matOriginal);
 					
 					}
 			}
