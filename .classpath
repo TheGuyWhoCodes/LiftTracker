@@ -3,6 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="var" path="opencv" sourcepath="opencv.sources"/>
-	<classpathentry kind="lib" path="C:/Users/SWAT/Desktop/LiftTracker-master/NetworkTables-3.0.0-20151123.234551-18-desktop-development.jar"/>
+	<classpathentry kind="lib" path="C:/Users/SWAT/Downloads/NetworkTables-3.0.0-20151123.234551-18-desktop-development (1).jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

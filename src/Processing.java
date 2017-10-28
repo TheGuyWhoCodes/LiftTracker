@@ -48,7 +48,7 @@ public class Processing {
 	static Mat matOriginal;
 	static Mat matFlipper;
 	public static final double OFFSET_TO_FRONT = 0;
-	public static final double CAMERA_WIDTH = 640;
+	public static final double CAMERA_WIDTH = 320;
 	public static final double DISTANCE_CONSTANT= 5738;
 	public static final double WIDTH_BETWEEN_TARGET = 8.5;
 	public static final double ANGLE_OFFSET =  4.9107;
@@ -74,7 +74,7 @@ public class Processing {
 //				opens up the camera stream and tries to load it
 				videoCapture = new VideoCapture();
 				tracker = new LiftTracker();
-				videoCapture.open("http://roborio-1806-frc.local:1181/?action=stream");  //TODO FIX THIS LINK AT COMP
+				videoCapture.open("http://10.18.6.2:1180/stream.mjpg");  //TODO FIX THIS LINK AT COMP
 				// change that to your team number boi("http://roborio-XXXX-frc.local:1181/?action=stream");
 				while(!videoCapture.isOpened()){
 					System.out.println("Didn't open Camera, restart jar");
